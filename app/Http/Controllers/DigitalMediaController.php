@@ -173,29 +173,59 @@ class DigitalMediaController extends Controller
     ], 200);
 }
 
-public function getSportResource()
+public function sport()
 {
-    try {
-        // Get all sport resources using Eloquent
-        $digital = digitalMedia::where('status', 'active')->get();
+   $digital = digitalMedia::where("category", 'sport')->get();
+   
+   if ($digital->isEmpty()) {
+    return response()->json([
+        'message' => 'Get searched resource',
+        'total' => $digital->count(),
+        'data' => $digital,
+    ], 200);
+   } else{
+    return response()->json([
+        'message' => 'data is empty'
+    ], 404);
+   }
+}
+
+public function finance()
+    {
         
-        // Prepare response data
-        $response = [
-            'message' => 'Get sport resource',
-            'total' => $digital->count(),
-            'data' => $digital,
-            'status' => 200
-        ];
+   $digital = digitalMedia::where("category", 'finance')->get();
+   
+   if ($digital->isEmpty()) {
+    return response()->json([
+        'message' => 'Get finance resource',
+        'total' => $digital->count(),
+        'data' => $digital,
+    ], 200);
+   } else{
+    return response()->json([
+        'message' => 'data is empty'
+    ], 404);
+   }
+    }
+
+    public function automotive()
+    {
         
-        return response()->json($response, 200);
-        
-    } catch (\Exception $e) {
-        return response()->json([
-            'message' => 'Error getting sport resource',
-            'error' => $e->getMessage()
-        ], 500);
+   $digital = digitalMedia::where("category", 'automotive')->get();
+   
+   if ($digital->isEmpty()) {
+    return response()->json([
+        'message' => 'Get automotive resource',
+        'total' => $digital->count(),
+        'data' => $digital,
+    ], 200);
+   } else{
+    return response()->json([
+        'message' => 'data is empty'
+    ], 404);
+   }
     }
 }
-}
+
 
 
